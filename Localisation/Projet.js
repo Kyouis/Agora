@@ -3,11 +3,13 @@ import {Text, View} from "react-native";
 
 const Projet = () => {
     return(
-      <View style={{backgroundColor: 'blue'}}>
-          <Text>
-              Test
-          </Text>
-      </View>
+        <>
+            <View style={{backgroundColor: 'blue'}}>
+                <Text>
+                    Test
+                </Text>
+            </View>
+        </>
     );
 };
 
