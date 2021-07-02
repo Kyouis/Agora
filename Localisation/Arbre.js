@@ -24,14 +24,14 @@ const Arbre = () => {
     }, []);
     return(
         <>
-            <View style={{backgroundColor: '#bbccb8'}}>
-                <Text>
+            <View style={{backgroundColor: '#bbccb8', minWidth: 200, maxWidth: 300, flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <Text style={{fontSize: 21}}>
                     {
-                        data.projet+'\n﹂'+
-                        data.parcelle+'\n\t﹂'+
-                        data.adresse+'\n\t\t﹂'+
-                        data.emplacement+'\n\t\t\t﹂'+
-                        data.segment+'\n\t\t\t\t﹂'+
+                        data.projet+'\n\n\n\n﹂'+
+                        data.parcelle+'\n\n\n\n﹂'+
+                        data.adresse+'\n\n\n\n﹂'+
+                        data.emplacement+'\n\n\n\n﹂'+
+                        data.segment+'\n\n\n\n﹂'+
                         data.compartiment
                     }
                 </Text>

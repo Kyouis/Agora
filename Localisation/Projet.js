@@ -5,9 +5,9 @@ import Arbre from "./Arbre";
 const Projet = () => {
     return(
         <>
-            <View style={{flexDirection: "row", flex:1, width: '100%'}}>
-                <Arbre style={{width:'30%'}}/>
-                <View style={{backgroundColor: 'gray', width:'60%'}}>
+            <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
+                <Arbre/>
+                <View style={{backgroundColor: 'gray', flex:2}}>
                     <Text>
 
                     </Text>

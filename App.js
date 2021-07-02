@@ -40,7 +40,7 @@ const createDB = () => {
         tx.executeSql("CREATE TRIGGER IF NOT EXISTS dataOneRow BEFORE INSERT ON CURRENTDATA WHEN (SELECT COUNT(*) FROM CURRENTDATA) >=1 BEGIN SELECT RAISE(FAIL, 'un seul row'); END;");
     }, (e) => console.log(e));
     db.transaction((tx) => {
-        tx.executeSql("INSERT INTO  CURRENTDATA VALUES (null, null, null, null, null, null);");
+        tx.executeSql("INSERT INTO  CURRENTDATA VALUES ('', '', '', '', '', '');");
     }, (e) => console.log(e));
 };
 
