@@ -55,7 +55,7 @@ const Projet = ({navigation}) => {
                             );
                         })
                     }
-                    <TouchableOpacity onPress={() => navigation.push('AJout de projet')}>
+                    <TouchableOpacity onPress={() => navigation.push('AJout de projet', {action: 'add'})}>
                         <Text>Ajouter</Text>
                     </TouchableOpacity>
                 </View>
