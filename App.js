@@ -49,7 +49,7 @@ const ProjetStackScreen = () => {
     return (
         <stackProjet.Navigator>
             <stackProjet.Screen name="Projets" component={Projet} />
-            <stackProjet.Screen name="Ajout de Projet" component={ProjetAdd} />
+            <stackProjet.Screen name="AJout de projet" component={ProjetAdd} />
         </stackProjet.Navigator>
     );
 }

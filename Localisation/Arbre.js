@@ -22,6 +22,7 @@ const Arbre = () => {
            })
         }, (e) => console.log(e));
     }, []);
+
     return(
         <>
             <View style={{backgroundColor: '#bbccb8', minWidth: 200, maxWidth: 300, flex: 1, alignItems: 'center', justifyContent: 'center'}}>
