@@ -8,7 +8,7 @@ const Arbre = () => {
     const [data, setData] = useState({});
     useEffect(() => {
         db.transaction( (tx) => {
-           tx.executeSql("SELECT * FROM CURRENTDATA;", (tx, rs) => {
+           tx.executeSql("SELECT * FROM CURRENTDATA;", [], (tx, rs) => {
                const row = rs.rows.item(0);
                const res = {
                    projet: row.currentProjet,

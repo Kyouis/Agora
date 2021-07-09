@@ -31,17 +31,22 @@ const db = SQLite.openDatabase('Agora');
 const createDB = () => {
     db.transaction( (tx) => {
         tx.executeSql("CREATE TABLE IF NOT EXISTS PROJET  (idProjet INTEGER PRIMARY KEY AUTOINCREMENT, nomProjet TEXT, dateProjet TEXT, nomAuteur TEXT, prenomAuteur TEXT, organisme TEXT);");
-        tx.executeSql("CREATE TABLE IF NOT EXISTS PARCELLE (idParcelle INTEGER PRIMARY KEY AUTOINCREMENT, section TEXT, numParcelle TEXT, idProjet INTEGER, FOREIGN KEY (idProjet) REFERENCES PROJET(idProjet));");
-        tx.executeSql("CREATE TABLE IF NOT EXISTS ADRESSE (idAdresse INTEGER PRIMARY KEY AUTOINCREMENT, numero INTEGER, rue TEXT, codePostal INTEGER, ville TEXT, idParcelle INTEGER, FOREIGN KEY (idParcelle) REFERENCES PARCELLE(idParcelle));");
-        tx.executeSql("CREATE TABLE IF NOT EXISTS EMPLACEMENT (idEmp INTEGER PRIMARY KEY AUTOINCREMENT, idParcelle INTEGER, codeEmplacement TEXT, niveauInfMax INTEGER, niveauSupMax INTEGER, typeEmplacement TEXT, FOREIGN KEY (idParcelle) REFERENCES PARCELLE(idParcelle));");
-        tx.executeSql("CREATE TABLE IF NOT EXISTS SEGMENT (idSegment INTEGER PRIMARY KEY AUTOINCREMENT, idEmp INTEGER, codeSegment TEXT, numeroNiveau INTEGER, demiNiveau INTEGER, typeSegment TEXT, FOREIGN KEY (idEmp) REFERENCES EMPLACEMENT(idEmp));");
-        tx.executeSql("CREATE TABLE IF NOT EXISTS COMPARTIMENT (idComp INTEGER PRIMARY KEY AUTOINCREMENT, idSegment INTEGER, codeCompartiment TEXT, refLocalisation TEXT, surfaceAuSol REAL, typeCompartiment TEXT, idAdresse INTEGER, FOREIGN KEY (idSegment) REFERENCES  SEGMENT(idSegment), FOREIGN KEY (idAdresse) REFERENCES ADRESSE(idAdresse));");
+        tx.executeSql("CREATE TABLE IF NOT EXISTS PARCELLE (idParcelle INTEGER PRIMARY KEY AUTOINCREMENT, section TEXT, numParcelle TEXT, idProjet INTEGER, FOREIGN KEY (idProjet) REFERENCES PROJET(idProjet) ON DELETE CASCADE );");
+        tx.executeSql("CREATE TABLE IF NOT EXISTS ADRESSE (idAdresse INTEGER PRIMARY KEY AUTOINCREMENT, numero INTEGER, rue TEXT, codePostal INTEGER, ville TEXT, idParcelle INTEGER, FOREIGN KEY (idParcelle) REFERENCES PARCELLE(idParcelle) ON DELETE CASCADE);");
+        tx.executeSql("CREATE TABLE IF NOT EXISTS EMPLACEMENT (idEmp INTEGER PRIMARY KEY AUTOINCREMENT, idParcelle INTEGER, codeEmplacement TEXT, niveauInfMax INTEGER, niveauSupMax INTEGER, typeEmplacement TEXT, FOREIGN KEY (idParcelle) REFERENCES PARCELLE(idParcelle) ON DELETE CASCADE);");
+        tx.executeSql("CREATE TABLE IF NOT EXISTS SEGMENT (idSegment INTEGER PRIMARY KEY AUTOINCREMENT, idEmp INTEGER, codeSegment TEXT, numeroNiveau INTEGER, demiNiveau INTEGER, typeSegment TEXT, FOREIGN KEY (idEmp) REFERENCES EMPLACEMENT(idEmp) ON DELETE CASCADE);");
+        tx.executeSql("CREATE TABLE IF NOT EXISTS COMPARTIMENT (idComp INTEGER PRIMARY KEY AUTOINCREMENT, idSegment INTEGER, codeCompartiment TEXT, refLocalisation TEXT, surfaceAuSol REAL, typeCompartiment TEXT, idAdresse INTEGER, FOREIGN KEY (idSegment) REFERENCES  SEGMENT(idSegment) ON DELETE CASCADE, FOREIGN KEY (idAdresse) REFERENCES ADRESSE(idAdresse) ON DELETE CASCADE);");
         tx.executeSql("CREATE TABLE IF NOT EXISTS CURRENTDATA (currentProjet TEXT, currentParcelle TEXT, currentAdresse TEXT, currentEmp TEXT, currentSef TEXT, currentComp TEXT)");
+        tx.executeSql("CREATE TABLE IF NOT EXISTS CURRENTID (currentProjetId INTEGER, currentParcelleId INTEGER, currentAdresseId INTEGER, currentEmpId INTEGER, currentSegId INTEGER, currentCompId INTEGER)");
         tx.executeSql("CREATE TRIGGER IF NOT EXISTS dataOneRow BEFORE INSERT ON CURRENTDATA WHEN (SELECT COUNT(*) FROM CURRENTDATA) >=1 BEGIN SELECT RAISE(FAIL, 'un seul row'); END;");
-    }, (e) => console.log(e));
+        tx.executeSql("CREATE TRIGGER IF NOT EXISTS dataOneRowId BEFORE INSERT ON CURRENTID WHEN (SELECT COUNT(*) FROM CURRENTID) >=1 BEGIN SELECT RAISE(FAIL, 'un seul row id'); END;");
+    }, (e) => console.log(e+' transCreate1'));
     db.transaction((tx) => {
         tx.executeSql("INSERT INTO  CURRENTDATA VALUES ('', '', '', '', '', '');");
-    }, (e) => console.log(e));
+    }, (e) => console.log(e+' transCreate2'));
+    db.transaction((tx) => {
+        tx.executeSql("INSERT INTO  CURRENTId VALUES (null,null, null, null, null, null);");
+    }, (e) => console.log(e+' transCreate3'));
 };
 
 
