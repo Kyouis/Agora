@@ -1,6 +1,7 @@
 import React from 'react';
 import {NavigationContainer} from "@react-navigation/native";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import {createDrawerNavigator} from "@react-navigation/drawer";
 import * as ScreenOrientation from 'expo-screen-orientation';
 import Projet from "./Localisation/Projet";
 import Parcelle from "./Localisation/Parcelle";
@@ -18,6 +19,7 @@ import AdresseAdd from "./Localisation/AdresseAdd";
 import EmplacementAdd from "./Localisation/EmplacementAdd";
 import SegmentAdd from "./Localisation/SegmentAdd";
 import CompartimentAdd from "./Localisation/CompartimentAdd";
+import Designation from "./Designation/Designation";
 
 const tab = createBottomTabNavigator();
 const stackProjet = createStackNavigator();
@@ -26,7 +28,8 @@ const stackAdresse = createStackNavigator();
 const stackEmplacement = createStackNavigator();
 const stackSegment = createStackNavigator();
 const stackCompartiment = createStackNavigator();
-
+const DesignationStack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 const db = SQLite.openDatabase('Agora');
 
 const createDB = () => {
@@ -50,6 +53,13 @@ const createDB = () => {
     }, (e) => console.log(e+' transCreate3'));
 };
 
+const DesignationStackScreen = () => {
+    return (
+        <DesignationStack.Navigator>
+            <DesignationStack.Screen name="Designation" component={Designation}/>
+        </DesignationStack.Navigator>
+    );
+}
 
 const ProjetStackScreen = () => {
     return (
@@ -104,20 +114,31 @@ const CompartimentStackScreen = () => {
         </stackCompartiment.Navigator>
     );
 }
+
+const Localisation = () =>{
+    return(
+        <tab.Navigator>
+            <tab.Screen name="Projet" component={ProjetStackScreen} />
+            <tab.Screen name="Parcelle" component={ParcelleStackScreen} />
+            <tab.Screen name="Adresse" component={AdresseStackScreen} />
+            <tab.Screen name="Emplacement" component={EmplacementStackScreen} />
+            <tab.Screen name="Segment" component={SegmentStackScreen} />
+            <tab.Screen name="Compartiment" component={CompartimentStackScreen} />
+        </tab.Navigator>
+    );
+}
+
+
 const App = () => {
     ScreenOrientation.lockAsync(OrientationLock.LANDSCAPE);
     StatusBar.setHidden(true);
     createDB();
     return (
         <NavigationContainer>
-            <tab.Navigator>
-                <tab.Screen name="Projet" component={ProjetStackScreen} />
-                <tab.Screen name="Parcelle" component={ParcelleStackScreen} />
-                <tab.Screen name="Adresse" component={AdresseStackScreen} />
-                <tab.Screen name="Emplacement" component={EmplacementStackScreen} />
-                <tab.Screen name="Segment" component={SegmentStackScreen} />
-                <tab.Screen name="Compartiment" component={CompartimentStackScreen} />
-            </tab.Navigator>
+            <Drawer.Navigator>
+              <Drawer.Screen name="Localisation" component={Localisation} />
+                <Drawer.Screen name="Designations" component={DesignationStackScreen}/>
+            </Drawer.Navigator>
         </NavigationContainer>
 
     );
