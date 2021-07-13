@@ -24,9 +24,9 @@ const Segment = ({navigation}) => {
     useEffect(() => {
         db.transaction( (tx) => {
             let idp;
-            tx.executeSql("SELECT currentSegId FROM CURRENTID", [], (tx, rs) => {
-                idp=rs.rows.item(0).currentSegId;
-                tx.executeSql("SELECT * FROM SEGMENT WHERE idSegment = ?;", [idp] ,(tx, rs) => {
+            tx.executeSql("SELECT currentEmpId FROM CURRENTID", [], (tx, rs) => {
+                idp=rs.rows.item(0).currentEmpId;
+                tx.executeSql("SELECT * FROM SEGMENT WHERE idEmp = ?;", [idp] ,(tx, rs) => {
                     let res = [];
                     for (let i = 0; i<rs.rows.length; i++) {
                         res.push(rs.rows.item(i));

@@ -17,6 +17,7 @@ import ParcelleAdd from "./Localisation/ParcelleAdd";
 import AdresseAdd from "./Localisation/AdresseAdd";
 import EmplacementAdd from "./Localisation/EmplacementAdd";
 import SegmentAdd from "./Localisation/SegmentAdd";
+import CompartimentAdd from "./Localisation/CompartimentAdd";
 
 const tab = createBottomTabNavigator();
 const stackProjet = createStackNavigator();
@@ -99,7 +100,7 @@ const CompartimentStackScreen = () => {
     return (
         <stackCompartiment.Navigator>
             <stackProjet.Screen name="Compartiments" component={Compartiment} />
-            <stackProjet.Screen name="Ajout de compartiment" component={CompartimentStackScreen} />
+            <stackProjet.Screen name="Ajout de compartiment" component={CompartimentAdd} />
         </stackCompartiment.Navigator>
     );
 }
