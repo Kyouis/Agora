@@ -60,6 +60,10 @@ const EmplacementAdd = ({route , navigation}) => {
                     >
                         <Picker.Item label='Local' value='Local'/>
                         <Picker.Item label='Travee' value='Travee'/>
+                        <Picker.Item label='Jardin' value='Jardin'/>
+                        <Picker.Item label='Cour' value='Cour'/>
+                        <Picker.Item label='Terrasse' value='Terrasse'/>
+                        <Picker.Item label='Patio' value='Patio'/>
                         <Picker.Item label='Aucun' value='Aucun'/>
                     </Picker>
                     <TouchableOpacity

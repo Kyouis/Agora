@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View} from "react-native";
 import Arbre from "./Arbre";
 import * as SQLite from "expo-sqlite";
+import {useFocusEffect} from "@react-navigation/native";
 
 
 const db = SQLite.openDatabase('Agora');
@@ -21,7 +22,7 @@ const supprimerEmp = (id, n) => {
 
 const Parcelle = ({navigation}) => {
     const [data, setData] = useState([]);
-    useEffect(() => {
+    useFocusEffect(() => {
         db.transaction( (tx) => {
             let idp;
             let idp2;
@@ -37,7 +38,7 @@ const Parcelle = ({navigation}) => {
                     setData(res);
                 })});
         }, (e) => console.log(e+' transSelectComp'));
-    }, []);
+    });
 
     return(
         <>
@@ -49,7 +50,10 @@ const Parcelle = ({navigation}) => {
                             return (
                                 <View style={{flexDirection: "row"}} key={value.idComp}>
                                     <Text>{value.codeCompartiment}</Text>
-                                    <TouchableOpacity onPress={() => updateArbre(value.idComp,value.codeCompartiment, navigation)}>
+                                    <TouchableOpacity onPress={() => {
+                                        navigation.navigate('Designation');
+                                        updateArbre(value.idComp,value.codeCompartiment, navigation);
+                                    }}>
                                         <Text>Selectionner</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => navigation.push('Ajout de compartiment', {action: 'mod', id: value.idComp})}>

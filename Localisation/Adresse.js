@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View} from "react-native";
 import Arbre from "./Arbre";
 import * as SQLite from "expo-sqlite";
+import {useFocusEffect} from "@react-navigation/native";
 
 
 const db = SQLite.openDatabase('Agora');
@@ -21,7 +22,7 @@ const supprimerAdresse = (id, n) => {
 
 const Adresse = ({navigation}) => {
     const [data, setData] = useState([]);
-    useEffect(() => {
+    useFocusEffect(() => {
         db.transaction( (tx) => {
             let idp;
             tx.executeSql("SELECT currentParcelleId FROM CURRENTID", [], (tx, rs) => {
@@ -34,7 +35,7 @@ const Adresse = ({navigation}) => {
                     setData(res);
                 })});
         }, (e) => console.log(e+' transSelectAdresse'));
-    }, []);
+    });
 
     return(
         <>
@@ -46,7 +47,10 @@ const Adresse = ({navigation}) => {
                             return (
                                 <View style={{flexDirection: "row"}} key={value.idAdresse}>
                                     <Text>{value.numero+value.rue+value.codePostal+value.ville}</Text>
-                                    <TouchableOpacity onPress={() => updateArbre(value.idAdresse,value.numero+value.rue+value.codePostal+value.ville, navigation)}>
+                                    <TouchableOpacity onPress={() => {
+                                        updateArbre(value.idAdresse, value.numero + value.rue + value.codePostal + value.ville, navigation);
+                                        navigation.navigate('Emplacement');
+                                    }}>
                                         <Text>Selectionner</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => navigation.push('Ajout d\'adresse', {action: 'mod', id: value.idAdresse})}>

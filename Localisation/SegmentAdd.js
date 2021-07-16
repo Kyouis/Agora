@@ -56,17 +56,12 @@ const SegmentAdd = ({route , navigation}) => {
                         onValueChange={(itemValue, itemIndex) => setType(itemValue)}
                     >
                         <Picker.Item label='Logement' value='Logement'/>
-                        <Picker.Item label='Jardin' value='Jardin'/>
-                        <Picker.Item label='Cour' value='Cour'/>
                         <Picker.Item label='Salle' value='Salle'/>
                         <Picker.Item label='Aile' value='Aile'/>
                         <Picker.Item label='Nef' value='Nef'/>
                         <Picker.Item label='Transept' value='Transept'/>
-                        <Picker.Item label='Toiture' value='Toiture'/>
                         <Picker.Item label='Comble' value='Comble'/>
                         <Picker.Item label='Toiture-Terrasse' value='TT'/>
-                        <Picker.Item label='Terrasse' value='Terrasse'/>
-                        <Picker.Item label='Segment' value='Segment'/>
                         <Picker.Item label='Aucun' value='Aucun'/>
                         <Picker.Item label='Cage Escalier' value='CE'/>
                     </Picker>

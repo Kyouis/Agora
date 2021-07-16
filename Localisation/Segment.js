@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View} from "react-native";
 import Arbre from "./Arbre";
 import * as SQLite from "expo-sqlite";
+import {useFocusEffect} from "@react-navigation/native";
 
 
 const db = SQLite.openDatabase('Agora');
@@ -21,7 +22,7 @@ const supprimerSeg = (id, n) => {
 
 const Segment = ({navigation}) => {
     const [data, setData] = useState([]);
-    useEffect(() => {
+    useFocusEffect(() => {
         db.transaction( (tx) => {
             let idp;
             tx.executeSql("SELECT currentEmpId FROM CURRENTID", [], (tx, rs) => {
@@ -34,7 +35,7 @@ const Segment = ({navigation}) => {
                     setData(res);
                 })});
         }, (e) => console.log(e+' transSelectSeg'));
-    }, []);
+    });
 
     return(
         <>

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View} from "react-native";
 import Arbre from "./Arbre";
 import * as SQLite from "expo-sqlite";
+import {useFocusEffect} from "@react-navigation/native";
 
 
 const db = SQLite.openDatabase('Agora');
@@ -21,7 +22,7 @@ const supprimerProjet = (id, n) => {
 
 const Projet = ({navigation}) => {
     const [data, setData] = useState([]);
-    useEffect(() => {
+    useFocusEffect(() => {
         db.transaction( (tx) => {
             tx.executeSql("SELECT * FROM PROJET;", [] ,(tx, rs) => {
                 let res = [];
@@ -31,7 +32,7 @@ const Projet = ({navigation}) => {
                 setData(res);
             })
         }, (e) => console.log(e+' transSelectProjet'));
-    }, []);
+    });
 
     return(
         <>

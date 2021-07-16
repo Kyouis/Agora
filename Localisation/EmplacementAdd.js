@@ -54,9 +54,7 @@ const EmplacementAdd = ({route , navigation}) => {
                         <Picker.Item label='Batiment' value='Batiment'/>
                         <Picker.Item label='Cour' value='Cour'/>
                         <Picker.Item label='Jardin' value='Jardin'/>
-                        <Picker.Item label='Parking' value='Parking'/>
                         <Picker.Item label='Site' value='Site'/>
-                        <Picker.Item label='Garage' value='Garage'/>
                     </Picker>
                     <TouchableOpacity
                         onPress={() => {
