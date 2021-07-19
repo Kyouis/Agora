@@ -3,6 +3,7 @@ import {Text, TouchableOpacity, View} from "react-native";
 import Arbre from "./Arbre";
 import * as SQLite from "expo-sqlite";
 import {useFocusEffect} from "@react-navigation/native";
+import Styles from "../Styles";
 
 
 const db = SQLite.openDatabase('Agora');
@@ -45,18 +46,24 @@ const Adresse = ({navigation}) => {
                     {
                         data.map( (value) => {
                             return (
-                                <View style={{flexDirection: "row"}} key={value.idAdresse}>
+                                <View style={Styles.item} key={value.idAdresse}>
                                     <Text>{value.numero+value.rue+value.codePostal+value.ville}</Text>
-                                    <TouchableOpacity onPress={() => {
-                                        updateArbre(value.idAdresse, value.numero + value.rue + value.codePostal + value.ville, navigation);
-                                        navigation.navigate('Emplacement');
-                                    }}>
+                                    <TouchableOpacity
+                                        style={Styles.button}
+                                        onPress={() => {
+                                            updateArbre(value.idAdresse, value.numero + value.rue + value.codePostal + value.ville, navigation);
+                                            navigation.navigate('Emplacement');
+                                        }}>
                                         <Text>Selectionner</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => navigation.push('Ajout d\'adresse', {action: 'mod', id: value.idAdresse})}>
+                                    <TouchableOpacity
+                                        style={Styles.button}
+                                        onPress={() => navigation.push('Ajout d\'adresse', {action: 'mod', id: value.idAdresse})}>
                                         <Text>Modifier</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => supprimerAdresse(value.idAdresse, navigation)}>
+                                    <TouchableOpacity
+                                        style={Styles.button}
+                                        onPress={() => supprimerAdresse(value.idAdresse, navigation)}>
                                         <Text>Supprimer</Text>
                                     </TouchableOpacity>
                                 </View>

@@ -3,6 +3,7 @@ import {Text, TouchableOpacity, View} from "react-native";
 import Arbre from "./Arbre";
 import * as SQLite from "expo-sqlite";
 import {useFocusEffect} from "@react-navigation/native";
+import Styles from "../Styles";
 
 
 const db = SQLite.openDatabase('Agora');
@@ -45,15 +46,24 @@ const Segment = ({navigation}) => {
                     {
                         data.map( (value) => {
                             return (
-                                <View style={{flexDirection: "row"}} key={value.idSegment}>
+                                <View style={Styles.item} key={value.idSegment}>
                                     <Text>{value.codeSegment}</Text>
-                                    <TouchableOpacity onPress={() => updateArbre(value.idSegment,value.codeSegment, navigation)}>
+                                    <TouchableOpacity
+                                        style={Styles.button}
+                                        onPress={() => {
+                                        updateArbre(value.idSegment,value.codeSegment, navigation);
+                                        navigation.navigate('Compartiment');
+                                    }}>
                                         <Text>Selectionner</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => navigation.push('Ajout de segment', {action: 'mod', id: value.idSegment})}>
+                                    <TouchableOpacity
+                                        style={Styles.button}
+                                        onPress={() => navigation.push('Ajout de segment', {action: 'mod', id: value.idSegment})}>
                                         <Text>Modifier</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => supprimerSeg(value.idSegment, navigation)}>
+                                    <TouchableOpacity
+                                        style={Styles.button}
+                                        onPress={() => supprimerSeg(value.idSegment, navigation)}>
                                         <Text>Supprimer</Text>
                                     </TouchableOpacity>
                                 </View>

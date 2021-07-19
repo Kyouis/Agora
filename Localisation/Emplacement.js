@@ -3,6 +3,7 @@ import {Text, TouchableOpacity, View} from "react-native";
 import Arbre from "./Arbre";
 import * as SQLite from "expo-sqlite";
 import {useFocusEffect} from "@react-navigation/native";
+import Styles from "../Styles";
 
 
 const db = SQLite.openDatabase('Agora');
@@ -45,15 +46,24 @@ const Parcelle = ({navigation}) => {
                     {
                         data.map( (value) => {
                             return (
-                                <View style={{flexDirection: "row"}} key={value.idEmp}>
+                                <View style={Styles.item} key={value.idEmp}>
                                     <Text>{value.codeEmplacement}</Text>
-                                    <TouchableOpacity onPress={() => updateArbre(value.idEmp,value.codeEmplacement, navigation)}>
+                                    <TouchableOpacity
+                                        style={Styles.button}
+                                        onPress={() => {
+                                        updateArbre(value.idEmp,value.codeEmplacement, navigation);
+                                        navigation.navigate('Segment');
+                                    }}>
                                         <Text>Selectionner</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => navigation.push('Ajout d\'emplacement', {action: 'mod', id: value.idEmp})}>
+                                    <TouchableOpacity
+                                        style={Styles.button}
+                                        onPress={() => navigation.push('Ajout d\'emplacement', {action: 'mod', id: value.idEmp})}>
                                         <Text>Modifier</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => supprimerEmp(value.idEmp, navigation)}>
+                                    <TouchableOpacity
+                                        style={Styles.button}
+                                        onPress={() => supprimerEmp(value.idEmp, navigation)}>
                                         <Text>Supprimer</Text>
                                     </TouchableOpacity>
                                 </View>
