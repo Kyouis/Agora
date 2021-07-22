@@ -42,12 +42,12 @@ const Adresse = ({navigation}) => {
         <>
             <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
                 <Arbre/>
-                <View style={{backgroundColor: 'gray', flex:2}}>
+                <View style={Styles.list}>
                     {
                         data.map( (value) => {
                             return (
                                 <View style={Styles.item} key={value.idAdresse}>
-                                    <Text>{value.numero+value.rue+value.codePostal+value.ville}</Text>
+                                    <Text style={Styles.label}>{value.numero+value.rue+value.codePostal+value.ville}</Text>
                                     <TouchableOpacity
                                         style={Styles.button}
                                         onPress={() => {
@@ -70,7 +70,9 @@ const Adresse = ({navigation}) => {
                             );
                         })
                     }
-                    <TouchableOpacity onPress={() => navigation.push('Ajout d\'adresse', {action: 'add'})}>
+                    <TouchableOpacity
+                        style={Styles.add}
+                        onPress={() => navigation.push('Ajout d\'adresse', {action: 'add'})}>
                         <Text>Ajouter</Text>
                     </TouchableOpacity>
                 </View>

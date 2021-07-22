@@ -30,7 +30,6 @@ const Parcelle = ({navigation}) => {
             tx.executeSql("SELECT * FROM CURRENTID", [], (tx, rs) => {
                 idp=rs.rows.item(0).currentSegId;
                 idp2=rs.rows.item(0).currentAdresseId;
-                console.log('current id from list : '+idp+' '+idp2);
                 tx.executeSql("SELECT * FROM COMPARTIMENT WHERE idSegment = ? AND idAdresse= ?;", [idp, idp2] ,(tx, rs) => {
                     let res = [];
                     for (let i = 0; i<rs.rows.length; i++) {
@@ -45,12 +44,12 @@ const Parcelle = ({navigation}) => {
         <>
             <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
                 <Arbre/>
-                <View style={{backgroundColor: 'gray', flex:2}}>
+                <View style={Styles.list}>
                     {
                         data.map( (value) => {
                             return (
                                 <View style={Styles.item} key={value.idComp}>
-                                    <Text>{value.codeCompartiment}</Text>
+                                    <Text style={Styles.label}>{value.codeCompartiment}</Text>
                                     <TouchableOpacity
                                         style={Styles.button}
                                         onPress={() => {
@@ -73,7 +72,9 @@ const Parcelle = ({navigation}) => {
                             );
                         })
                     }
-                    <TouchableOpacity onPress={() => navigation.push('Ajout de compartiment', {action: 'add'})}>
+                    <TouchableOpacity
+                        style={Styles.add}
+                        onPress={() => navigation.push('Ajout de compartiment', {action: 'add'})}>
                         <Text>Ajouter</Text>
                     </TouchableOpacity>
                 </View>

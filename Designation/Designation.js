@@ -3,18 +3,30 @@ import {Picker, Text, TextInput, TouchableOpacity, View} from "react-native";
 import * as SQLite from "expo-sqlite";
 import {useFocusEffect} from "@react-navigation/native";
 import Arbre from "../Localisation/Arbre";
+import Styles from "../Styles";
+import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 const db = SQLite.openDatabase('Agora');
 
+const addDesignation = (n, s, c, sc, d) => {
+
+    db.transaction((tx) => {
+        let idp;
+        tx.executeSql("SELECT * FROM CURRENTID ", [], (tx, rs) => {
+            idp=rs.rows.item(0).currentCompId;
+            tx.executeSql("INSERT INTO ELEMENT (nom, strate, classe, sousClasse, denom, idComp) VALUES (?,?,?,?,?,?)", [n, s, c, sc, d, idp]);
+        })
+    })
+}
 
 
-const Designation = () => {
+const Designation = ({navigation}) => {
     const [data, setData] = useState([]);
     const [elem, setElem] = useState([]);
-    const [comp, setComp] = useState();
+    const [n, setN] = useState(1);
 
     const selectElem = (comp) => {
-        setComp(comp);
         db.transaction( (tx) => {
             tx.executeSql("SELECT * FROM ELEMENT WHERE idCOmp = ?", [comp], (tx, rs) => {
                 let res = [];
@@ -26,55 +38,125 @@ const Designation = () => {
         });
     };
 
-    useEffect(() => {
+    useFocusEffect(() => {
         db.transaction((tx) => {
-            tx.executeSql("SELECT * FROM COMPARTIMENT", [],(tx, rs) => {
-                let res = [];
-                for (let i = 0; i<rs.rows.length; i++) {
-                    res.push(rs.rows.item(i));
-                }
-                setData(res);
-            }, () => {}, (tx, e) => console.log(e))
-        }, (e) => console.log(e+ 'transSelectDesi'));
-    }, []);
+            let idp;
+            tx.executeSql("SELECT * FROM CURRENTID ", [], (tx, rs) => {
+                idp=rs.rows.item(0).currentCompId;
+                selectElem(idp);
+            })
+        })
+
+    });
 
     return (
         <>
             <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
                 <Arbre/>
-                <View>
-                    <Picker
-                        selectedValue={comp}
-                        onValueChange={(v)=>{selectElem(v)}}>
-                        {data.map((item, index) => {
-                            console.log(item);
-                            return (<Picker.Item label={item.refLocalisation} value={item.idComp} key={index}/>)
-                        })}
-                    </Picker>
-                    <View style={{backgroundColor: 'gray', flex:2}}>
+                <View style={{flex: 2}}>
+                    <View style={{backgroundColor: 'gray', flex:2, flexDirection: "column"}}>
                         {
-                            elem.map( (value) => {
+                            elem.map(value => {
+                               return(
+                                 <View key={value.idElem} style={{flexDirection: "row"}}>
+                                     <TextInput
+                                         style={Styles.designPicker}
+                                         onChangeText={(n) => {}}
+                                         value={value.nom}
+                                         placeholder="Nom de l'élément"
+                                     />
+                                     <Picker
+                                         style={Styles.designPicker}
+                                         selectedValue={value.strate}
+                                         onValueChange={(itemValue, itemIndex) =>{}}
+                                     >
+                                         <Picker.Item label='test' value='test'/>
+                                     </Picker>
+                                     <Picker
+                                         style={Styles.designPicker}
+                                         selectedValue={value.classe}
+                                         onValueChange={(itemValue, itemIndex) => {}}
+                                     >
+                                         <Picker.Item label='test' value='test'/>
+                                     </Picker>
+                                     <Picker
+                                         style={Styles.designPicker}
+                                         selectedValue={value.sousClasse}
+                                         onValueChange={(itemValue, itemIndex) => {}}
+                                     >
+                                         <Picker.Item label='test' value='test'/>
+                                     </Picker>
+                                     <Picker
+                                         style={Styles.designPicker}
+                                         selectedValue={value.denom}
+                                         onValueChange={(itemValue, itemIndex) => {}}
+                                     >
+                                         <Picker.Item label='test' value='test'/>
+                                     </Picker>
+                                     <TouchableOpacity
+                                         onPress={addDesignation}
+                                     >
+                                         <AntDesign name="pluscircle" size={24} color="black"/>
+                                     </TouchableOpacity>
+                                 </View>
+                               );
+                            })
+
+                            /*[...Array(n)].map((value, index) => {
+                                let nom;
+                                let strate;
+                                let classe;
+                                let sc;
+                                let denom;
                                 return (
-                                    <View style={{flexDirection: "row"}} key={value.idElem}>
-                                        <Text>{value.denom || value.sousClasse || value.classe || value.strate}</Text>
-                                        <TouchableOpacity onPress={() => updateArbre(value.idEmp,value.codeEmplacement, navigation)}>
-                                            <Text>Selectionner</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => navigation.push('Ajout d\'emplacement', {action: 'mod', id: value.idEmp})}>
-                                            <Text>Modifier</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => supprimerEmp(value.idEmp, navigation)}>
-                                            <Text>Supprimer</Text>
+                                    <View key={index} style={{flexDirection: "row"}}>
+                                        <TextInput
+                                            style={Styles.designPicker}
+                                            onChangeText={(n) => nom=n}
+                                            value={nom}
+                                            placeholder="Nom de l'élément"
+                                        />
+                                        <Picker
+                                            style={Styles.designPicker}
+                                            selectedValue={strate}
+                                            onValueChange={(itemValue, itemIndex) => strate=itemValue}
+                                        >
+                                            <Picker.Item label='test' value='test'/>
+                                        </Picker>
+                                        <Picker
+                                            style={Styles.designPicker}
+                                            selectedValue={classe}
+                                            onValueChange={(itemValue, itemIndex) => classe=itemValue}
+                                        >
+                                            <Picker.Item label='test' value='test'/>
+                                        </Picker>
+                                        <Picker
+                                            style={Styles.designPicker}
+                                            selectedValue={sc}
+                                            onValueChange={(itemValue, itemIndex) => sc=itemValue}
+                                        >
+                                            <Picker.Item label='test' value='test'/>
+                                        </Picker>
+                                        <Picker
+                                            style={Styles.designPicker}
+                                            selectedValue={denom}
+                                            onValueChange={(itemValue, itemIndex) => denom=itemValue}
+                                        >
+                                            <Picker.Item label='test' value='test'/>
+                                        </Picker>
+                                        <TouchableOpacity
+                                            onPress={addDesignation}
+                                        >
+                                            <AntDesign name="pluscircle" size={24} color="black"/>
                                         </TouchableOpacity>
                                     </View>
+
                                 );
-                            })
+                            })*/
                         }
-                        <TouchableOpacity onPress={() => navigation.push('Ajout d\'emplacement', {action: 'add'})}>
-                            <Text>Ajouter</Text>
-                        </TouchableOpacity>
                     </View>
                 </View>
+
             </View>
         </>
     );

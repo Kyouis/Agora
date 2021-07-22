@@ -39,12 +39,12 @@ const Projet = ({navigation}) => {
         <>
             <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
                 <Arbre/>
-                <View style={{backgroundColor: 'gray', flex:2}}>
+                <View style={Styles.list}>
                     {
                         data.map( (value) => {
                             return (
                                 <View style={Styles.item} key={value.idProjet}>
-                                    <Text>{value.nomProjet}</Text>
+                                    <Text style={Styles.label}>{value.nomProjet}</Text>
                                     <TouchableOpacity
                                         style={Styles.button}
                                         onPress={() => {
@@ -67,7 +67,9 @@ const Projet = ({navigation}) => {
                             );
                         })
                     }
-                    <TouchableOpacity onPress={() => navigation.push('AJout de projet', {action: 'add'})}>
+                    <TouchableOpacity
+                        style={Styles.add}
+                        onPress={() => navigation.push('AJout de projet', {action: 'add'})}>
                         <Text>Ajouter</Text>
                     </TouchableOpacity>
                 </View>

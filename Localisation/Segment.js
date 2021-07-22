@@ -42,12 +42,12 @@ const Segment = ({navigation}) => {
         <>
             <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
                 <Arbre/>
-                <View style={{backgroundColor: 'gray', flex:2}}>
+                <View style={Styles.list}>
                     {
                         data.map( (value) => {
                             return (
                                 <View style={Styles.item} key={value.idSegment}>
-                                    <Text>{value.codeSegment}</Text>
+                                    <Text style={Styles.label}>{value.codeSegment}</Text>
                                     <TouchableOpacity
                                         style={Styles.button}
                                         onPress={() => {
@@ -70,7 +70,9 @@ const Segment = ({navigation}) => {
                             );
                         })
                     }
-                    <TouchableOpacity onPress={() => navigation.push('Ajout de segment', {action: 'add'})}>
+                    <TouchableOpacity
+                        style={Styles.add}
+                        onPress={() => navigation.push('Ajout de segment', {action: 'add'})}>
                         <Text>Ajouter</Text>
                     </TouchableOpacity>
                 </View>

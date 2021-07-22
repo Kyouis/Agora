@@ -42,12 +42,12 @@ const Parcelle = ({navigation}) => {
         <>
             <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
                 <Arbre/>
-                <View style={{backgroundColor: 'gray', flex:2}}>
+                <View style={Styles.list}>
                     {
                         data.map( (value) => {
                             return (
                                 <View style={Styles.item} key={value.idEmp}>
-                                    <Text>{value.codeEmplacement}</Text>
+                                    <Text style={Styles.label}>{value.codeEmplacement}</Text>
                                     <TouchableOpacity
                                         style={Styles.button}
                                         onPress={() => {
@@ -70,7 +70,9 @@ const Parcelle = ({navigation}) => {
                             );
                         })
                     }
-                    <TouchableOpacity onPress={() => navigation.push('Ajout d\'emplacement', {action: 'add'})}>
+                    <TouchableOpacity
+                        style={Styles.add}
+                        onPress={() => navigation.push('Ajout d\'emplacement', {action: 'add'})}>
                         <Text>Ajouter</Text>
                     </TouchableOpacity>
                 </View>
