@@ -53,7 +53,7 @@ const Parcelle = ({navigation}) => {
                                     <TouchableOpacity
                                         style={Styles.button}
                                         onPress={() => {
-                                        navigation.navigate('Designation');
+                                        navigation.navigate('Designations');
                                         updateArbre(value.idComp,value.codeCompartiment, navigation);
                                     }}>
                                         <Text>Selectionner</Text>

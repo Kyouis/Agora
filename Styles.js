@@ -35,8 +35,8 @@ const Styles = StyleSheet.create({
         alignItems: 'center'
     },
     designPicker: {
-        width: '10%',
-        paddingHorizontal: '9%'
+        width: '13%',
+        marginHorizontal: '3%'
     }
 });
 

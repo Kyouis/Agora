@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, TouchableOpacity, View} from "react-native";
+import {Button, Text, TouchableOpacity, View} from "react-native";
 import Arbre from "./Arbre";
 import * as SQLite from "expo-sqlite";
 import {useFocusEffect} from "@react-navigation/native";
@@ -39,6 +39,8 @@ const Projet = ({navigation}) => {
         <>
             <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
                 <Arbre/>
+                <Button title="RESET" onPress={() => db.transaction(tx => {tx.executeSql("DELETE FROM ELEMENT")})}/>
+                <Button title="SHOW" onPress={() => db.transaction(tx => tx.executeSql("SELECT COUNT(*) FROM ELEMENT", [], (tx, rs) => console.log(rs.rows.item(0))))}/>
                 <View style={Styles.list}>
                     {
                         data.map( (value) => {

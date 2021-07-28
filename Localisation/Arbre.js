@@ -31,7 +31,7 @@ const Arbre = () => {
                 <Text style={styles.arbre}>{'﹂'+data.adresse}</Text>
                 <Text style={styles.arbre}>{'﹂'+data.emplacement}</Text>
                 <Text style={styles.arbre}>{'﹂'+data.segment}</Text>
-                <Text >{'﹂'+data.compartiment}</Text>
+                <Text style={styles.arbre}>{'﹂'+data.compartiment}</Text>
             </View>
         </>
     );
