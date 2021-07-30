@@ -4,20 +4,24 @@ import Arbre from "./Arbre";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as SQLite from "expo-sqlite";
 
+//ouvre la bdd
 const db = SQLite.openDatabase('Agora');
 
+//ajoute un projet a la bdd
 const add = (n, d, na, pa, o) => {
     db.transaction( (tx) => {
         tx.executeSql("INSERT INTO PROJET (nomProjet, dateProjet, nomAuteur, prenomAuteur, organisme) VALUES (?,?,?,?,?)", [n, d, na, pa, o])
     }, (e) => console.log(e))
 };
 
+//modifie un projet existant
 const mod = (id, n, d, na, pa, o) => {
     db.transaction( (tx) => {
         tx.executeSql("UPDATE PROJET SET nomProjet = ?, dateProjet = ?, nomAuteur = ?, prenomAuteur = ?, organisme = ? WHERE idProjet = ?", [n, d, na, pa, o, id], (tx ,rs) => console.log("update"))
     }, (e) => console.log(e))
 };
 
+//composant contenant les champs a remplir pour ajouter un projet a la bdd
 const ProjetAdd = ({route , navigation}) => {
     const [show, setShow] = useState(false);
     const [nom, setNom] = useState("");
@@ -28,7 +32,7 @@ const ProjetAdd = ({route , navigation}) => {
     return(
         <>
             <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
-                <Arbre/>
+                <Arbre num='1'/>
                 <View style={{backgroundColor: 'gray', flex:2}}>
                     <TextInput
                         onChangeText={(n) => setNom(n)}

@@ -4,8 +4,10 @@ import Arbre from "./Arbre";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as SQLite from "expo-sqlite";
 
+//ouvre la bdd sqlite
 const db = SQLite.openDatabase('Agora');
 
+//ajoute une parcelle a la liste des parcelle
 const add = (s, np) => {
     db.transaction( (tx) => {
         let i;
@@ -16,12 +18,14 @@ const add = (s, np) => {
     }, (e) => console.log(e))
 };
 
+//modifie une parcelle déjà existante
 const mod = (id, s, np) => {
     db.transaction( (tx) => {
         tx.executeSql("UPDATE PARCELLE SET section = ?, numParcelle = ? WHERE idParcelle = ?", [s, np, id], (tx ,rs) => console.log("update"))
     }, (e) => console.log(e))
 };
 
+//composant contenant les champs a remplir pour ajouter une parcelle
 const ParcelleAdd = ({route , navigation}) => {
     const [sec, setSec] = useState();
     const [num, setNum] = useState();
@@ -29,7 +33,7 @@ const ParcelleAdd = ({route , navigation}) => {
     return(
         <>
             <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
-                <Arbre/>
+                <Arbre num='2'/>
                 <View style={{backgroundColor: 'gray', flex:2}}>
                     <TextInput
                         onChangeText={(n) => setSec(n)}

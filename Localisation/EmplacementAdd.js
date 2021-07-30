@@ -3,8 +3,10 @@ import {Picker, Text, TextInput, TouchableOpacity, View} from "react-native";
 import Arbre from "./Arbre";
 import * as SQLite from "expo-sqlite";
 
+//ouvre la bdd
 const db = SQLite.openDatabase('Agora');
 
+//ajoute un emplacement a la liste
 const add = (n, ni, ns, t) => {
     db.transaction( (tx) => {
         let i;
@@ -15,12 +17,14 @@ const add = (n, ni, ns, t) => {
     }, (e) => console.log(e))
 };
 
+//modifie un emplacement de la liste
 const mod = (id, n, ni, ns, t) => {
     db.transaction( (tx) => {
         tx.executeSql("UPDATE EMPLACEMENT SET codeEmplacement = ?, niveauInfMax = ?, niveauSupMax = ?, typeEmplacement = ? WHERE idEmp = ?", [t.substring(0,3)+n, ni, ns, t, id], (tx ,rs) => console.log("update"))
     }, (e) => console.log(e))
 };
 
+//composant affichant les données a remplir pour ajouter un emplacement
 const EmplacementAdd = ({route , navigation}) => {
     const [num, setNum] = useState();
     const [inf, setInf] = useState();
@@ -30,7 +34,7 @@ const EmplacementAdd = ({route , navigation}) => {
     return(
         <>
             <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
-                <Arbre/>
+                <Arbre num='4'/>
                 <View style={{backgroundColor: 'gray', flex:2}}>
                     <TextInput
                         onChangeText={(n) => setNum(n)}

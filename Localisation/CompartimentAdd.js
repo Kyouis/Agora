@@ -3,8 +3,10 @@ import {Picker, Text, TextInput, TouchableOpacity, View} from "react-native";
 import Arbre from "./Arbre";
 import * as SQLite from "expo-sqlite";
 
+//ouvre la bdd SQLite
 const db = SQLite.openDatabase('Agora');
 
+//ajoute un compartiment a la liste
 const add = (n, su,t) => {
     db.transaction( (tx) => {
         let i;
@@ -28,6 +30,7 @@ const add = (n, su,t) => {
     }, (e) => console.log(e))
 };
 
+//modifie un compartiment déjà existant
 const mod = (id, n, su, t) => {
     db.transaction( (tx) => {
         tx.executeSql("UPDATE COMPARTIMENT SET codeCompartiment = ?, surfaceAuSol = ?, typeCompartiment = ? WHERE idComp = ?", [t.substring(0,3)+n, su, t, id], (tx ,rs) => console.log("update"))
@@ -42,7 +45,7 @@ const EmplacementAdd = ({route , navigation}) => {
     return(
         <>
             <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
-                <Arbre/>
+                <Arbre num='6'/>
                 <View style={{backgroundColor: 'gray', flex:2}}>
                     <TextInput
                         onChangeText={(n) => setNum(n)}

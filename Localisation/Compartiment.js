@@ -5,9 +5,10 @@ import * as SQLite from "expo-sqlite";
 import {useFocusEffect} from "@react-navigation/native";
 import Styles from "../Styles";
 
-
+//Ouvre la bdd SQLite
 const db = SQLite.openDatabase('Agora');
 
+//Permet de mettre a jour l'arbre
 const updateArbre = (id, emp, n) => {
     db.transaction( (tx) => {
         tx.executeSql("UPDATE CURRENTDATA SET currentComp = ?", [emp], (tx, rs) => n.push('Compartiments'));
@@ -15,12 +16,14 @@ const updateArbre = (id, emp, n) => {
     })
 };
 
+//permet de supprimer un emplacement
 const supprimerEmp = (id, n) => {
     db.transaction( (tx) => {
         tx.executeSql("DELETE FROM COMPARTIMENT WHERE idComp = ?", [id], (tx, res) => n.push('Compartiments'));
     }, (e) => console.log(e))
 };
 
+//composant correspondant à la liste des parcelle
 const Parcelle = ({navigation}) => {
     const [data, setData] = useState([]);
     useFocusEffect(() => {
@@ -43,7 +46,7 @@ const Parcelle = ({navigation}) => {
     return(
         <>
             <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
-                <Arbre/>
+                <Arbre num='6'/>
                 <View style={Styles.list}>
                     {
                         data.map( (value) => {

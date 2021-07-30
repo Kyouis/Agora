@@ -20,6 +20,8 @@ import EmplacementAdd from "./Localisation/EmplacementAdd";
 import SegmentAdd from "./Localisation/SegmentAdd";
 import CompartimentAdd from "./Localisation/CompartimentAdd";
 import Designation from "./Designation/Designation";
+import Garde from "./Garde";
+import About from "./About";
 
 const tab = createBottomTabNavigator();
 const stackProjet = createStackNavigator();
@@ -30,6 +32,7 @@ const stackSegment = createStackNavigator();
 const stackCompartiment = createStackNavigator();
 const DesignationStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+const Acc = createStackNavigator();
 const db = SQLite.openDatabase('Agora');
 
 const createDB = () => {
@@ -129,6 +132,24 @@ const Localisation = () =>{
     );
 }
 
+const Draw = () => {
+    return(
+        <Drawer.Navigator>
+            <Drawer.Screen name="Localisation" component={Localisation} />
+            <Drawer.Screen name="Designations" component={DesignationStackScreen}/>
+        </Drawer.Navigator>
+    );
+};
+
+const Accueil = () => {
+  return(
+      <Acc.Navigator headerMode="none">
+          <Acc.Screen name="Garde" component={Garde}/>
+          <Acc.Screen name="Tirroir" component={Draw}/>
+          <Acc.Screen name="About" component={About}/>
+      </Acc.Navigator>
+  );
+};
 
 const App = () => {
     ScreenOrientation.lockAsync(OrientationLock.LANDSCAPE);
@@ -136,10 +157,7 @@ const App = () => {
     createDB();
     return (
         <NavigationContainer>
-            <Drawer.Navigator>
-              <Drawer.Screen name="Localisation" component={Localisation} />
-                <Drawer.Screen name="Designations" component={DesignationStackScreen}/>
-            </Drawer.Navigator>
+            <Accueil/>
         </NavigationContainer>
 
     );

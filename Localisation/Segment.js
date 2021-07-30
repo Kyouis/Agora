@@ -5,9 +5,10 @@ import * as SQLite from "expo-sqlite";
 import {useFocusEffect} from "@react-navigation/native";
 import Styles from "../Styles";
 
-
+//ouvre la bdd
 const db = SQLite.openDatabase('Agora');
 
+//update l'arbre
 const updateArbre = (id, s, n) => {
     db.transaction( (tx) => {
         tx.executeSql("UPDATE CURRENTDATA SET currentSef = ?", [s], (tx, rs) => n.push('Segments'));
@@ -15,12 +16,14 @@ const updateArbre = (id, s, n) => {
     })
 };
 
+//supprime un segment de la bdd
 const supprimerSeg = (id, n) => {
     db.transaction( (tx) => {
         tx.executeSql("DELETE FROM SEGMENT WHERE idSegment = ?", [id], (tx, res) => n.push('Segments'));
     }, (e) => console.log(e))
 };
 
+//composant correspondant a la liste des segments
 const Segment = ({navigation}) => {
     const [data, setData] = useState([]);
     useFocusEffect(() => {
@@ -41,7 +44,7 @@ const Segment = ({navigation}) => {
     return(
         <>
             <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
-                <Arbre/>
+                <Arbre num='5'/>
                 <View style={Styles.list}>
                     {
                         data.map( (value) => {

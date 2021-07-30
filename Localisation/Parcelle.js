@@ -5,9 +5,10 @@ import * as SQLite from "expo-sqlite";
 import {useFocusEffect} from "@react-navigation/native";
 import Styles from "../Styles";
 
-
+//ouvre la bdd SQLite
 const db = SQLite.openDatabase('Agora');
 
+//update l'arbre des données selectionnées
 const updateArbre = (id, parcelle, n) => {
     db.transaction( (tx) => {
         tx.executeSql("UPDATE CURRENTDATA SET currentParcelle = ?", [parcelle], (tx, rs) => n.push('Parcelles'));
@@ -15,6 +16,7 @@ const updateArbre = (id, parcelle, n) => {
     })
 };
 
+//supprime la parcelle de la bdd
 const supprimerParcelle = (id, n) => {
     console.log('TESTE0I: '+id);
     db.transaction( (tx) => {
@@ -22,6 +24,7 @@ const supprimerParcelle = (id, n) => {
     }, (e) => console.log(e))
 };
 
+//composant affichant la liste des parcelles
 const Parcelle = ({navigation}) => {
     const [data, setData] = useState([]);
     useFocusEffect(() => {
@@ -39,10 +42,11 @@ const Parcelle = ({navigation}) => {
         }, (e) => console.log(e+' transSelectParcelle'));
     });
 
+    //render la liste des parcelles
     return(
         <>
             <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
-                <Arbre/>
+                <Arbre num='2'/>
                 <View style={Styles.list}>
                     {
                         data.map( (value) => {

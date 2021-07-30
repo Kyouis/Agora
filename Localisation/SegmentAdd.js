@@ -3,8 +3,10 @@ import {Picker, Switch, Text, TextInput, TouchableOpacity, View} from "react-nat
 import Arbre from "./Arbre";
 import * as SQLite from "expo-sqlite";
 
+//ouvre la bdd
 const db = SQLite.openDatabase('Agora');
 
+//ajoute un segment a la bdd
 const add = (n, ni, dn, t) => {
     db.transaction( (tx) => {
         let i;
@@ -15,12 +17,14 @@ const add = (n, ni, dn, t) => {
     }, (e) => console.log(e))
 };
 
+//modifie un segment existant
 const mod = (id, n, ni, dn, t) => {
     db.transaction( (tx) => {
         tx.executeSql("UPDATE SEGMENT SET codeSegment = ?, numeroNiveau = ?, demiNiveau = ?, typeSegment = ? WHERE idSegment = ?", [t.substring(0,3)+n, ni, dn, t, id], (tx ,rs) => console.log("update"))
     }, (e) => console.log(e))
 };
 
+//composant contenant les champs a remplir pour ajouter un segment a la bdd
 const SegmentAdd = ({route , navigation}) => {
     const [num, setNum] = useState();
     const [niv, setNiv] = useState();
@@ -32,7 +36,7 @@ const SegmentAdd = ({route , navigation}) => {
     return(
         <>
             <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
-                <Arbre/>
+                <Arbre num='5'/>
                 <View style={{backgroundColor: 'gray', flex:2}}>
                     <TextInput
                         onChangeText={(n) => setNum(n)}

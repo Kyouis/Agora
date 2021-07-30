@@ -5,9 +5,10 @@ import * as SQLite from "expo-sqlite";
 import {useFocusEffect} from "@react-navigation/native";
 import Styles from "../Styles";
 
-
+//ouvre la bdd sqlite
 const db = SQLite.openDatabase('Agora');
 
+//update l'arbre
 const updateArbre = (id, projet, n) => {
   db.transaction( (tx) => {
       tx.executeSql("UPDATE CURRENTDATA SET currentProjet = ?", [projet], (tx, rs) => n.push('Projets'));
@@ -15,12 +16,14 @@ const updateArbre = (id, projet, n) => {
   }, (e) => console.log(e))
 };
 
+//supprime un projet de la liste
 const supprimerProjet = (id, n) => {
     db.transaction( (tx) => {
         tx.executeSql("DELETE FROM PROJET WHERE idProjet = ?", [id], (tx, res) => n.push('Projets'));
     })
 };
 
+//composant contenant la liste des projets
 const Projet = ({navigation}) => {
     const [data, setData] = useState([]);
     useFocusEffect(() => {
@@ -38,9 +41,7 @@ const Projet = ({navigation}) => {
     return(
         <>
             <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
-                <Arbre/>
-                <Button title="RESET" onPress={() => db.transaction(tx => {tx.executeSql("DELETE FROM ELEMENT")})}/>
-                <Button title="SHOW" onPress={() => db.transaction(tx => tx.executeSql("SELECT COUNT(*) FROM ELEMENT", [], (tx, rs) => console.log(rs.rows.item(0))))}/>
+                <Arbre num='1'/>
                 <View style={Styles.list}>
                     {
                         data.map( (value) => {

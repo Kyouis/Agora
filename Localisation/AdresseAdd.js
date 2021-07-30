@@ -4,8 +4,10 @@ import Arbre from "./Arbre";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as SQLite from "expo-sqlite";
 
+//ouvre la bdd SQLite
 const db = SQLite.openDatabase('Agora');
 
+//ajoute une adresse a la bdd
 const add = (n, r, cp, v) => {
     db.transaction( (tx) => {
         let i;
@@ -16,22 +18,25 @@ const add = (n, r, cp, v) => {
     }, (e) => console.log(e))
 };
 
+//update une adresse de la bdd
 const mod = (id,n, r, cp, v) => {
     db.transaction( (tx) => {
         tx.executeSql("UPDATE Adresse SET numero = ?, rue = ?, codePostal = ?, ville = ? WHERE idAdresse = ?", [n, r, cp, v, id], (tx ,rs) => console.log("update"))
     }, (e) => console.log(e))
 };
 
+//composant de l'ajout d'adresse
 const AdresseAdd = ({route , navigation}) => {
     const [num, setNum] = useState();
     const [cp, setCp] = useState();
     const [rue, setRue] = useState();
     const [ville, setVille] = useState();
 
+    //render les champ a remplir pour ensuite insérer l'adresse
     return(
         <>
             <View style={{flexDirection: "row", flex:1, width: '100%', height: '100%'}}>
-                <Arbre/>
+                <Arbre num='3'/>
                 <View style={{backgroundColor: 'gray', flex:2}}>
                     <TextInput
                         onChangeText={(n) => setNum(n)}
